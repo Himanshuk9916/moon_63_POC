@@ -1,15 +1,27 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {texts} from '../constants/text';
 import {colors} from '../constants/colors';
+import IndexModal from './Modal';
 
-function Header() {
+function Header(props: any) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [nifty, setNifty] = useState(true);
+  const [sensex, setSenSex] = useState(true);
+  const [other, setOther] = useState(false);
+
   const niftyView = () => {
     return (
       <View style={styles.niftyContainerView}>
         <View>{/* <Text>View1</Text> */}</View>
         <View style={{alignItems: 'center'}}>
-          <Text style={styles.nifty_value_text}>{texts.NIFTY_50}</Text>
+          <Text style={styles.nifty_value_text}>{other? 'OTHER':texts.NIFTY_50}</Text>
           <Text style={styles.nifty_value_text}>{texts[17755]}</Text>
           <Text style={styles.niftyValue}>{texts[160]}</Text>
         </View>
@@ -33,7 +45,7 @@ function Header() {
               resizeMode="contain"
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalVisible(prev => !prev)}>
             <Image
               source={require('../Assets/settings.png')}
               style={{height: 20, width: 20}}
@@ -44,14 +56,37 @@ function Header() {
       </View>
     );
   };
+  const onClose = () => {
+    setModalVisible(prev => !prev);
+  };
+
+  const getData = (data: any, name: any) => {
+    console.log(data, name);
+    if(data == 'Nifty'){
+      setNifty(name)
+    }else if(data == 'SenSex'){
+      setSenSex(name)
+    }else{
+      setOther(name)
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={{flexDirection: 'row', height: '30%'}}>
-        {niftyView()}
-        {sensexView()}
+    <>
+      <IndexModal
+        visible={modalVisible}
+        onClose={onClose}
+        getData={(items: any, name: any) => getData(items, name)}
+        nifty={nifty}
+        sensex={sensex}
+      />
+      <View style={styles.container}>
+        <View style={{flexDirection: 'row', height: '30%'}}>
+          {niftyView()}
+          {sensexView()}
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
