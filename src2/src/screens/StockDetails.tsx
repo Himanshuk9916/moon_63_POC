@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useEffect, useState,useCallback} from 'react';
+import {Image, StyleSheet} from 'react-native';
 import {View, Text, FlatList, TouchableOpacity, LogBox} from 'react-native';
-import Header from '../Component/Header';
+import Header from '../components/Header';
 import {colors} from '../constants/colors';
+import {texts} from '../constants/text';
 
 LogBox.ignoreAllLogs();
 
@@ -15,15 +16,21 @@ function StockDetails() {
 
   const componentHeaderBlock = () => {
     return (
-      <View
-        style={styles.headerComponentView}>
+      <View style={styles.headerComponentView}>
         <View>
-          <Text>NOR</Text>
+          <TouchableOpacity ><Text>{texts.NOR}</Text></TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text>Extra</Text>
+        <View style={styles.headerFlexEndView}>
+          <TouchableOpacity style={styles.notificationView}>
+          </TouchableOpacity>
           <TouchableOpacity style={{borderWidth: 1, borderRadius: 20}}>
-            <Text style={styles.addText}>Add</Text>
+            <Text style={styles.addText}>{texts.ADD}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={require('../Assets/filter.png')} style={styles.icon}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={require('../Assets/options.png')} style={styles.icon}/>
           </TouchableOpacity>
         </View>
       </View>
@@ -34,9 +41,9 @@ function StockDetails() {
     let StockArraydata = [];
     for (let i = 0; i < 20; i++) {
       StockArraydata.push({
-        companyName: 'AKZOINDIA',
+        companyName: Math.floor(Math.random()*99),
         index: 'NSE',
-        value: '2221.00',
+        value: Math.floor(Math.random()*999),
         dayValue: '35.15',
         percentage: '1.65',
         id: i,
@@ -45,12 +52,23 @@ function StockDetails() {
     setStockData(StockArraydata);
   };
 
+  const onViewableItemsChanged = useCallback(({ viewableItems, changed }:any) => {
+    // console.log("Visible items are", viewableItems);
+    // console.log("Changed in this iteration", changed);
+}, []);
+
+const _viewabilityConfig = {
+    itemVisiblePercentThreshold: 50
+}
+
   return (
     <View style={{flex: 1}}>
       <Header />
       {componentHeaderBlock()}
       <View style={{height: 500}}>
         <FlatList
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={_viewabilityConfig}
           data={stockData}
           renderItem={({item}) => (
             <View style={styles.stock}>
@@ -107,19 +125,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  index:{
-    fontSize: 12, marginLeft: 5
+  index: {
+    fontSize: 12,
+    marginLeft: 5,
   },
-  headerComponentView:{
+  headerComponentView: {
     height: '7%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     alignItems: 'center',
-    backgroundColor: 'yellow',
   },
-  addText:{
-    paddingHorizontal: 10, paddingVertical: 5
+  addText: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  notificationView:{
+    height:25,
+    width:25,
+    borderRadius:12.5,
+    backgroundColor:'orange'
+  },
+  icon:{
+    height:25,
+    width:25
+  },
+  headerFlexEndView:{
+    flexDirection:'row',
+    width:150,
+    justifyContent:'space-between',
+    alignItems:'center'
   }
 });
 
