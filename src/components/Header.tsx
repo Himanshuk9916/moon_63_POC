@@ -33,7 +33,7 @@ function Header(props: any) {
       <View style={styles.niftyContainerView}>
         <View>{/* <Text>View1</Text> */}</View>
         <View style={{alignItems: 'center'}}>
-          <Text style={styles.nifty_value_text}>{niftyValue.toString()}</Text>
+          <Text style={styles.nifty_value_text}>{texts.NIFTY_50}</Text>
           <Text style={styles.nifty_value_text}>{texts[17755]}</Text>
           <Text style={styles.niftyValue}>{texts[160]}</Text>
         </View>

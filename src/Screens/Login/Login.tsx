@@ -12,6 +12,7 @@ import alignment from '../../utils/alignment';
 import styles from './LoginStyle';
 import {colors} from '../../constants/colors';
 import { regex } from '../../constants/regex';
+import IndexModal from '../../components/Modal';
 
 function Login() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -102,6 +103,7 @@ function Login() {
           </Touch>
         </View>
       </View>
+      <IndexModal visible={modalVisible} onClose={onClose}/>
     </SafeAreaView>
   );
 }
