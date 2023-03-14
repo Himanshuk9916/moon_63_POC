@@ -2,6 +2,7 @@ import React, {useEffect, useState,useCallback} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {View, Text, FlatList, TouchableOpacity, LogBox} from 'react-native';
 import Header from '../../components/Header';
+import StockDetailsList from '../../components/StockDetailsList';
 import {colors} from '../../constants/colors';
 import {texts} from '../../constants/text';
 import {styles} from './StockDetailsStyles'
@@ -68,28 +69,18 @@ const _viewabilityConfig = {
       {componentHeaderBlock()}
       <View style={{height: 500}}>
         <FlatList
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={_viewabilityConfig}
+        // onViewableItemsChanged={onViewableItemsChanged}
+        // viewabilityConfig={_viewabilityConfig}
           data={stockData}
           renderItem={({item}) => (
-            <View style={styles.stock}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>{item.companyName}</Text>
-                <Text style={styles.index}>{item.index}</Text>
-              </View>
-              <View style={styles.stockContainer}>
-                <View>
-                  <Text style={styles.stockPriceText}>{item.value}</Text>
-                  <Text
-                    style={{
-                      color: colors.bright_green,
-                    }}>{`${item.dayValue}(+${item.percentage}%)`}</Text>
-                </View>
-                <View style={styles.endT}>
-                  <Text style={styles.endTtext}>T</Text>
-                </View>
-              </View>
-            </View>
+            <StockDetailsList 
+            index={item.index}
+            companyName={item.companyName}
+            value={item.value}
+            dayValue={item.dayValue}
+            percentage={item.percentage}
+            endtext={item.endtext}
+            />
           )}
         />
       </View>

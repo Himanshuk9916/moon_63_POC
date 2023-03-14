@@ -2,11 +2,13 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     stock: {
-      height: 50,
+      height: 60,
       borderBottomWidth: 1,
       borderBottomColor: 'grey',
       flexDirection: 'row',
       justifyContent: 'space-between',
+      paddingHorizontal:20,
+      alignItems:'center'
     },
     endT: {
       borderWidth: 1,
@@ -15,6 +17,7 @@ export const styles = StyleSheet.create({
       borderRadius: 20,
       alignItems: 'center',
       justifyContent: 'center',
+      marginHorizontal:10
     },
     endTtext: {
       fontWeight: 'bold',
