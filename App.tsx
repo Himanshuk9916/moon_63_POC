@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import TabBar from "./src2/src/navigationP/TabNavigation";
+import TabBar from "./src/navigationP/TabNavigation";
 
 function App(){
 

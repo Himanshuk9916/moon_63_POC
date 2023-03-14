@@ -20,11 +20,6 @@ function Login() {
   const [valid,setValid]=useState(true);
   const [securePassword,setSecurePassword]=useState(true)
 
-  useEffect(()=>{
-    console.log('UserName',userName)
-    console.log('Password',password)
-  },[userName,password])
-
   const validateAndProceed=(userName:any,password:any)=>{
     if(userName!=='' && regex.password.test(password)){
         setValid(false)
